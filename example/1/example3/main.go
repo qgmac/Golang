@@ -1,0 +1,38 @@
+/*
+更复杂的例子
+我们还可以将上面的例子演化一下，实现双向的读写。
+
+服务器端代码不用修改，因为它已经实现了读写，读是通过listener.ReadFromUDP,写通过listener.WriteToUDP
+原文链接 https://colobu.com/2016/10/19/Go-UDP-Programming/
+*/
+
+package main
+
+import (
+	"fmt"
+	"net"
+)
+
+// linux 发送UPD数据包测试
+//echo "udp_testaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" | socat 4-datagram:192.168.8.68:9981
+
+func main() {
+	listener, err := net.ListenUDP("udp", &net.UDPAddr{IP: net.ParseIP("0.0.0.0"), Port: 9981})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Printf("Local: <%s> \n", listener.LocalAddr().String())
+	data := make([]byte, 1024)
+	for {
+		n, remoteAddr, err := listener.ReadFromUDP(data)
+		if err != nil {
+			fmt.Printf("error during read: %s", err)
+		}
+		fmt.Printf("<%s> %s\n", remoteAddr, data[:n])
+		_, err = listener.WriteToUDP([]byte(data[:n]), remoteAddr)
+		if err != nil {
+			fmt.Printf(err.Error())
+		}
+	}
+}
