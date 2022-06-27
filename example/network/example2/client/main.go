@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	sip := net.ParseIP("127.0.0.1")
+	sip := net.ParseIP("127.0.0.network")
 	port := 9981
 	srcAddr := &net.UDPAddr{IP: net.IPv4zero, Port: 0}
 	dstAddr := &net.UDPAddr{IP: sip, Port: port}
