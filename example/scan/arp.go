@@ -25,7 +25,7 @@ func listenARP(ctx context.Context) {
 			return
 		case p := <-ps.Packets():
 			arp := p.Layer(layers.LayerTypeARP).(*layers.ARP)
-			if arp.Operation == 2 {
+			if arp.Operation == layers.ARPReply {
 				mac := net.HardwareAddr(arp.SourceHwAddress)
 				m := manuf.Search(mac.String())
 				pushData(ParseIP(arp.SourceProtAddress).String(), mac, "", m)
