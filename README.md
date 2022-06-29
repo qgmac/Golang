@@ -2,8 +2,11 @@
 
 ##### 2022-06-29
 ```shell
-# package会更新当前包版本和所有依赖该包的版本
-# go get package[包名]
+# 更新go package
+# 更新所有包 
+go get -u
+# 更新指定包名
+go get 包名
 
 # git 打标签
 git tag -a "v0.0.5" -m ""
