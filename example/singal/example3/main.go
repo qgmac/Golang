@@ -11,7 +11,7 @@ import (
 // 优雅退出go守护进程
 func main() {
 	c := make(chan os.Signal)
-	// 监听信号
+	// 监听信号 SIGUSR1 SIGUSR2 windows 下并不支持改信号
 	signal.Notify(c, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGUSR1, syscall.SIGUSR2)
 
 	go func() {
